@@ -51,7 +51,7 @@ class PrivateTagsApiTests(TestCase):
         self.assertEqual(res.data, serializer.data)
 
     def test_limited_to_user_retrieve_tags_by_user(self):
-        """Test that ags returned are for the authenticated user"""
+        """Test that tags returned are for the authenticated user"""
 
         user2 = get_user_model().objects.create_user(
             'other@mail.com',
