@@ -9,7 +9,7 @@ from recipe import serializers
 
 class TagViewSet(mixins.UpdateModelMixin,
                  mixins.ListModelMixin,
-                 mixins.CreateModelMixin,
+                 #  mixins.CreateModelMixin,
                  mixins.DestroyModelMixin,
                  viewsets.GenericViewSet):
     """Manage tags in the database"""
