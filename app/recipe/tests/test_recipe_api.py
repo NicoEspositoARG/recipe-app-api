@@ -12,7 +12,7 @@ from rest_framework.test import APIClient
 
 from core.models import Recipe
 
-from app.recipe.serializers import (
+from recipe.serializers import (
     RecipeSerializer,
     RecipeDetailSerializer,
 )
