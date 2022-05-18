@@ -4,7 +4,7 @@ from rest_framework.permissions import IsAuthenticated
 
 
 from core.models import Tag, Recipe
-from recipe import serializer
+from app.recipe import serializers
 
 
 class TagViewSet(viewsets.GenericViewSet,
@@ -15,7 +15,7 @@ class TagViewSet(viewsets.GenericViewSet,
     permission_classes = (IsAuthenticated,)
 
     queryset = Tag.objects.all()
-    serializer_class = serializer.TagSerializer
+    serializer_class = serializers.TagSerializer
 
     def get_queryset(self):
         """Return objects for the current authenticated user only"""
@@ -30,7 +30,7 @@ class TagViewSet(viewsets.GenericViewSet,
 
 class RecipeViewSet(viewsets.ModelViewSet):
     """View for manage recipe APIs."""
-    serializer_class = serializer.RecipeSerializer
+    serializer_class = serializers.RecipeSerializer
     queryset = Recipe.objects.all()
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
