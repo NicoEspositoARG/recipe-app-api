@@ -23,7 +23,12 @@ services:
 
   db:
     image: postgres:13-alpine
+    volumes:
+      - dev-db-data:/var/lib/postgresql/data
     environment:
       - POSTGRES_DB=app
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=supersecretpassword
+
+volumes:
+  dev-db-data:
