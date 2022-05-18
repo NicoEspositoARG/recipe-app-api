@@ -7,12 +7,14 @@ from core.models import Tag, Recipe
 from recipe import serializers
 
 
-class TagViewSet(viewsets.GenericViewSet,
+class TagViewSet(mixins.UpdateModelMixin,
                  mixins.ListModelMixin,
-                 mixins.CreateModelMixin):
+                 mixins.CreateModelMixin,
+                 mixins.DestroyModelMixin,
+                 viewsets.GenericViewSet):
     """Manage tags in the database"""
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
 
     queryset = Tag.objects.all()
     serializer_class = serializers.TagSerializer
