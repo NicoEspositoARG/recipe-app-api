@@ -7,32 +7,14 @@ from core.models import Tag, Recipe, Ingredient
 from recipe import serializers
 
 
-class IngredientViewSet(mixins.DestroyModelMixin,
-                        mixins.UpdateModelMixin,
-                        mixins.ListModelMixin,
-                        viewsets.GenericViewSet):
-    """Manage ingredients in the database."""
-    serializer_class = serializers.IngredientSerializer
-    queryset = Ingredient.objects.all()
+class BaseRecipeAttrViewSet(
+        mixins.DestroyModelMixin,
+        mixins.UpdateModelMixin,
+        mixins.ListModelMixin,
+        viewsets.GenericViewSet):
+    """Base ViewSet for recipe attributes."""
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
-
-    def get_queryset(self):
-        """Filter queryset to authenticated user."""
-        return self.queryset.filter(user=self.request.user).order_by('-name')
-
-
-class TagViewSet(mixins.UpdateModelMixin,
-                 mixins.ListModelMixin,
-                 #  mixins.CreateModelMixin,
-                 mixins.DestroyModelMixin,
-                 viewsets.GenericViewSet):
-    """Manage tags in the database"""
-    authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated]
-
-    queryset = Tag.objects.all()
-    serializer_class = serializers.TagSerializer
 
     def get_queryset(self):
         """Return objects for the current authenticated user only"""
@@ -40,9 +22,18 @@ class TagViewSet(mixins.UpdateModelMixin,
             user=self.request.user).order_by('-name')
         # request is a class variable and user should be set when authenticated
 
-    def perform_create(self, serializer):
-        """Create a new Tag"""
-        serializer.save(user=self.request.user)
+
+class IngredientViewSet(BaseRecipeAttrViewSet):
+    """Manage ingredients in the database."""
+    serializer_class = serializers.IngredientSerializer
+    queryset = Ingredient.objects.all()
+
+
+class TagViewSet(BaseRecipeAttrViewSet):
+    """Manage tags in the database"""
+
+    queryset = Tag.objects.all()
+    serializer_class = serializers.TagSerializer
 
 
 class RecipeViewSet(viewsets.ModelViewSet):
